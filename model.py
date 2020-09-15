@@ -48,7 +48,8 @@ def create_model(existing='', is_twohundred=False, is_halffeatures=True):
         decoder = upproject(decoder, int(decode_filters/4), 'up2', concat_with='pool2_pool')
         decoder = upproject(decoder, int(decode_filters/8), 'up3', concat_with='pool1')
         decoder = upproject(decoder, int(decode_filters/16), 'up4', concat_with='conv1/relu')
-        if False: decoder = upproject(decoder, int(decode_filters/32), 'up5', concat_with='input_1')
+        if not is_halffeatures:
+            decoder = upproject(decoder, int(decode_filters/32), 'up5', concat_with='input_1')
 
         # Extract depths (final layer)
         conv3 = Conv2D(filters=1, kernel_size=3, strides=1, padding='same', name='conv3')(decoder)
